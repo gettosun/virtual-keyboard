@@ -53,7 +53,7 @@ class KeysEng {
         this.Comma = ['chars',',','<',',','<'];
         this.Period = ['chars','.','>','.','>'];
         this.Slash = ['chars','/','?','/','?'];
-        this.ArrowUp = ['handler','▲','▲','▲','▲'];
+        this.ArrowUp = ['chars','▲','▲','▲','▲'];
         this.ShiftRight = ['handler','Shift','Shift','Shift','Shift'];
         this.ControlLeft = ['handler','Ctrl','Ctrl','Ctrl','Ctrl'];
         this.MetaLeft = ['handler','Win','Win','Win','Win'];
@@ -61,7 +61,7 @@ class KeysEng {
         this.Space = ['handler','Space','Space','Space','Space'];
         this.AltRight = ['handler','Alt','Alt','Alt','Alt'];
         this.ArrowLeft = ['handler','◀','◀','◀','◀'];
-        this.ArrowDown = ['handler','▼','▼','▼','▼'];
+        this.ArrowDown = ['chars','▼','▼','▼','▼'];
         this.ArrowRight = ['handler','▶','▶','▶','▶'];
         this.ControlRight = ['handler','Ctrl','Ctrl','Ctrl','Ctrl'];
     }
@@ -121,7 +121,7 @@ class KeysRus {
         this.Comma = ['chars','б','Б','Б','б'];
         this.Period = ['chars','ю','Ю','Ю','ю'];
         this.Slash = ['chars','.',',','.',','];
-        this.ArrowUp = ['handler','▲','▲','▲','▲'];
+        this.ArrowUp = ['chars','▲','▲','▲','▲'];
         this.ShiftRight = ['handler','Shift','Shift','Shift','Shift'];
         this.ControlLeft = ['handler','Ctrl','Ctrl','Ctrl','Ctrl'];
         this.MetaLeft = ['handler','Win','Win','Win','Win'];
@@ -129,7 +129,7 @@ class KeysRus {
         this.Space = ['handler','Space','Space','Space','Space'];
         this.AltRight = ['handler','Alt','Alt','Alt','Alt'];
         this.ArrowLeft = ['handler','◀','◀','◀','◀'];
-        this.ArrowDown = ['handler','▼','▼','▼','▼'];
+        this.ArrowDown = ['chars','▼','▼','▼','▼'];
         this.ArrowRight = ['handler','▶','▶','▶','▶'];
         this.ControlRight = ['handler','Ctrl','Ctrl','Ctrl','Ctrl'];
     }
@@ -139,6 +139,9 @@ function keyboard() {
     let wrapper = document.createElement('div');
     wrapper.classList.add('wrapper');
     document.body.appendChild(wrapper);
+    let header = document.createElement('h1');
+    header.innerHTML = 'RSS Virtual Keydoard';
+    wrapper.appendChild(header);
     let textarea = document.createElement('textarea');
     textarea.classList.add('textarea');
     textarea.id = 'textarea';
@@ -149,6 +152,9 @@ function keyboard() {
     let keyboard = document.createElement('div');
     keyboard.classList.add('keyboard');
     wrapper.appendChild(keyboard);
+    let subHeader = document.createElement('h2');
+    subHeader.innerHTML = 'Клавиатура создана в операционной системе Windows<br>Для переключения языка комбинация: левыe Ctrl + Alt';
+    wrapper.appendChild(subHeader);
     textarea.value = '';
     let caretPosition = 0;
     let langSwitchCtrl = 0;
@@ -162,6 +168,15 @@ function keyboard() {
     let n = keyEngNames;
     let v = keyEngValues;
     let caps = 0;
+    let lang = localStorage.getItem('lang') ? localStorage.getItem('lang') : 'eng';
+    if(lang == 'rus') {
+        n = keyRusNames;
+        v = keyRusValues;
+    }
+    if(lang == 'eng') {
+        n = keyEngNames;
+        v = keyEngValues;
+    }
 
     start(n, v, 1);
 
@@ -181,9 +196,14 @@ function keyboard() {
         }
         if(event.target.matches('.Backspace')) {
             --caretPosition;
-            textarea.value = textarea.value.slice(0, caretPosition) + textarea.value.slice(caretPosition + 1);
-            textarea.focus();
-            textarea.selectionEnd = caretPosition;
+            if(caretPosition < 0) {
+                caretPosition = 0;
+            } else {
+                textarea.value = textarea.value.slice(0, caretPosition) + textarea.value.slice(caretPosition + 1);
+                textarea.focus();
+                textarea.selectionEnd = caretPosition;
+            }
+            
         }
         if(event.target.matches('.Delete')) {
             textarea.value = textarea.value.slice(0, caretPosition) + textarea.value.slice(caretPosition + 1);
@@ -227,7 +247,6 @@ function keyboard() {
             }
             textarea.focus();
             textarea.selectionEnd = caretPosition;
-            console.log(caretPosition);
         }
         if(event.target.matches('.ArrowRight')) {
             caretPosition++;
@@ -236,7 +255,6 @@ function keyboard() {
             }
             textarea.focus();
             textarea.selectionStart = caretPosition;
-            console.log(caretPosition);
         }
         //console.log(textarea.selectionEnd);
     });
@@ -311,9 +329,12 @@ function keyboard() {
             } else {
                 start(n, v, 3);
             }
+
+            keyAnim();
             textarea.focus();
             textarea.selectionEnd = caretPosition;
-            return e.preventDefault();
+            //document.querySelector('.CapsLock').classList.add('active');
+            //return e.preventDefault();
         }
         if(e.code == 'ShiftLeft') {
             keyboard.innerHTML = '';
@@ -411,6 +432,12 @@ function keyboard() {
             textarea.focus();
             textarea.selectionEnd = caretPosition;
         }
+        if(e.code == 'CapsLock') {
+            
+            textarea.focus();
+            textarea.selectionEnd = caretPosition;
+            document.querySelector('.CapsLock').classList.add('active');
+        }
 
         keyDisp();
         function keyDisp() {
@@ -419,6 +446,7 @@ function keyboard() {
             }, 100);
             dispatchAnim;
         }
+        
     };
     function changeLang() {
         let capsSwitcher = 0;
@@ -432,12 +460,19 @@ function keyboard() {
             v = keyRusValues;
             keyboard.innerHTML = '';
             start(keyRusNames, keyRusValues, capsSwitcher);
+            lang = 'rus';
+            setLocalLang();
         } else {
             n = keyEngNames;
             v = keyEngValues;
             keyboard.innerHTML = '';
             start(keyEngNames, keyEngValues, capsSwitcher);
+            lang = 'eng';
+            setLocalLang();
         }
+    }
+    function setLocalLang() {
+        localStorage.setItem('lang', lang);
     }
     
 }

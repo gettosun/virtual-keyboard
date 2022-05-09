@@ -12,10 +12,18 @@ span {
 .wrapper {
     width: 1280px;
     margin: 0 auto;
-    //padding: 0 10%;
     display: flex;
     flex-direction: column;
     padding-top: 30px;
+}
+h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: rgba($color: #000000, $alpha: .7);
+}
+h2 {
+    text-align: center;
+    color: rgba($color: #000000, $alpha: .7);
 }
 .textarea {
     width: inherit;
@@ -33,6 +41,10 @@ span {
     gap: 10px;
     margin: 0 auto;
     padding: 10px;
+    border: 1px solid black;
+    border-radius: 10px;
+    background-color: rgba($color: #d7e1ec, $alpha: .5);
+    margin-bottom: 30px;
 }
 .key {
     height: 70px;
@@ -40,18 +52,22 @@ span {
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 1px solid black;
+    border: 1px solid rgba($color: #000000, $alpha: .5);
     border-radius: 10px;
     cursor: pointer;
     user-select: none;
     font-size: 24px;
     font-weight: bold;
+    color: rgba($color: #000000, $alpha: .7);
+    background-color: rgba($color: #d7e1ec, $alpha: .9);
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
     &:hover {
-        background-color: aqua;
-        color: red;
+        color: #000000;
     }
     &:active {
-        background-color: blue;
+        background-color: rgba($color: #d7e1ec, $alpha: .5);
+        box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
+        border: 1px solid rgba($color: #000000, $alpha: .4);
     }
 }
 
@@ -61,10 +77,6 @@ span {
 }
 .CapsLock {
     grid-column: span 2;
-    .active {
-        background-color: aqua;
-        color: red;
-    }
 }
 .Enter {
     grid-column: span 2;
@@ -77,5 +89,8 @@ span {
 }
 
 .active {
-    background-color: blue;
+    color: #000000;
+    background-color: rgba($color: #d7e1ec, $alpha: .5);
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
+    border: 1px solid rgba($color: #000000, $alpha: .4);
 }
