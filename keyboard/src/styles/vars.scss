@@ -1,8 +1,13 @@
-$main-color: purple;
+/* $main-color: purple;
 $bg-color: aquamarine;
 $font: 'Grape Nuts', cursive;
 $main-font: 'Roboto', sans-serif;
 
 * {
+    box-sizing: border-box;
+} */
+* {
+    padding: 0;
+    margin: 0;
     box-sizing: border-box;
 }

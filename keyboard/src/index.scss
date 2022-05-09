@@ -6,3 +6,76 @@
 h1 {
     font-family: $main-font;
 } */
+span {
+    cursor: pointer;
+}
+.wrapper {
+    width: 1280px;
+    margin: 0 auto;
+    //padding: 0 10%;
+    display: flex;
+    flex-direction: column;
+    padding-top: 30px;
+}
+.textarea {
+    width: inherit;
+    margin: 0 auto;
+    margin-bottom: 30px;
+    padding: 10px;
+    font-size: 1.5rem;
+    resize: none;
+}
+.keyboard {
+    width: inherit;
+    display: grid;
+    grid-template-columns: repeat(15, 1fr);
+    grid-template-rows: 1fr 1fr;
+    gap: 10px;
+    margin: 0 auto;
+    padding: 10px;
+}
+.key {
+    height: 70px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid black;
+    border-radius: 10px;
+    cursor: pointer;
+    user-select: none;
+    font-size: 24px;
+    font-weight: bold;
+    &:hover {
+        background-color: aqua;
+        color: red;
+    }
+    &:active {
+        background-color: blue;
+    }
+}
+
+.Backspace {
+    grid-column: span 2;
+    width: 100%;
+}
+.CapsLock {
+    grid-column: span 2;
+    .active {
+        background-color: aqua;
+        color: red;
+    }
+}
+.Enter {
+    grid-column: span 2;
+}
+.ShiftRight, .ShiftLeft {
+    grid-column: span 2;
+}
+.Space {
+    grid-column: span 7;
+}
+
+.active {
+    background-color: blue;
+}
